@@ -89,7 +89,7 @@ public class EcoTracker extends javax.swing.JFrame {
     private void waterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waterButtonActionPerformed
         // TODO add your handling code here:
         new WaterActivityForm().setVisible(true);
-dispose();
+        dispose();
     }//GEN-LAST:event_waterButtonActionPerformed
 
     private void TransportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TransportButtonActionPerformed
