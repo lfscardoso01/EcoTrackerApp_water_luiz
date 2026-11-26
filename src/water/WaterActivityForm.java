@@ -3,7 +3,7 @@ package water;
 
 import app.EcoTracker;
 import water.WaterHistoryForm;
-
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,6 +14,9 @@ import water.WaterHistoryForm;
  * @author lfscardoso
  */
 public class WaterActivityForm extends javax.swing.JFrame {
+    // Keeps the records when the water screens are reopened.
+private static WaterActivityManager manager =
+        new WaterActivityManager();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(WaterActivityForm.class.getName());
 
@@ -84,6 +87,7 @@ public class WaterActivityForm extends javax.swing.JFrame {
         emissionLb8.setText("Emission factor (kg CO2e/kWh)");
 
         addButton.setText("Add");
+        addButton.addActionListener(this::addButtonActionPerformed);
 
         searchButton.setText("Search");
 
@@ -246,6 +250,26 @@ dispose();
     private void textLb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLb2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textLb2ActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+    // Reads the values entered in the form.
+    int id = Integer.parseInt(textLb1.getText());
+    String date = textLb2.getText();
+    double duration = Double.parseDouble(textLb3.getText());
+    double volume = Double.parseDouble(textLb4.getText());
+
+    // Creates a water activity.
+    WaterActivity activity =
+            new WaterActivity(id, date, duration, volume);
+
+    // Adds the object to the list.
+    manager.addActivity(activity);
+
+   JOptionPane.showMessageDialog(this, "Record added successfully.");
+
+
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments

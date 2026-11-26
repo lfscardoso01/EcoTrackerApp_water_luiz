@@ -44,40 +44,14 @@ public class WaterActivityManager {
         return null;
 }
   // Deletes a water activity by its ID.
-public boolean deleteActivity(int id) {
-    WaterActivity activity = searchActivity(id);
+    public boolean deleteActivity(int id) {
+        WaterActivity activity = searchActivity(id);
 
-        if (activity != null) {
-            activities.remove(activity);
-            return true;
+            if (activity != null) {
+                activities.remove(activity);
+                return true;
     }
 
-        return false;
+            return false;
     }
-
-public static void main(String[] args) {
-    WaterActivityManager manager = new WaterActivityManager();
-
-    WaterActivity activity = new WaterActivity(
-            1, "26-11-2026", 5, 20
-    );
-
-    manager.addActivity(activity);
-
-    // Searches for an existing record.
-    WaterActivity found = manager.searchActivity(1);
-
-    if (found != null) {
-        System.out.println(found.displayInfo());
-    }
-
-    // Searches for a missing record.
-    System.out.println(manager.searchActivity(99));
-
-    // Deletes the record, then tries again.
-    System.out.println(manager.deleteActivity(1));
-    System.out.println(manager.deleteActivity(1));
-
-    System.out.println(manager.displayActivities());
-}
 }
