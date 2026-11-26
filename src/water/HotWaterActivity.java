@@ -58,7 +58,17 @@ public class HotWaterActivity extends WaterActivity {
     // Calculates estimated emissions using the heating energy and emission factor.
     public double calculateCarbonEmissions() {
         return calculateHeatingEnergy() * emissionFactor;
-}
+}   @Override
+     public String displayInfo(){
+           
+            return super.displayInfo() +       
+                "\nInitial Temperature: "+initialTemperature+ " C " +
+                "\nFinal Temperature: " +finalTemperature+ " C " +
+                "\nEnergy: " +calculateHeatingEnergy()+ " kWh" +
+                "\nCarbon Emission: " +calculateCarbonEmissions()+ " kg CO2e ";
+    }
+    
+
     
     
 }
