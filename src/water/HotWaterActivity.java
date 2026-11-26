@@ -48,4 +48,17 @@ public class HotWaterActivity extends WaterActivity {
         return emissionFactor;
     }
     
+    // Estimates the energy needed to heat water, in kWh.
+    public double calculateHeatingEnergy() {
+    double temperatureDifference =
+            finalTemperature - initialTemperature;
+
+    return getVolume() * 4186 * temperatureDifference / 3600000;
+}
+    // Calculates estimated emissions using the heating energy and emission factor.
+    public double calculateCarbonEmissions() {
+        return calculateHeatingEnergy() * emissionFactor;
+}
+    
+    
 }
