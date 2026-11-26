@@ -67,6 +67,7 @@ public EnergySimulationForm(ApplianceManager manager) {
         jLabel3.setText("New hours used per day");
 
         btnSimulate.setText("Simulate");
+        btnSimulate.addActionListener(this::btnSimulateActionPerformed);
 
         jLabel4.setText("Estimate comsumption and saving (kwh/day)");
 
@@ -146,6 +147,58 @@ screen.setLocationRelativeTo(this);
 screen.setVisible(true);
 dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void btnSimulateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulateActionPerformed
+       int selectedIndex = cmbAppliance.getSelectedIndex();
+
+if (selectedIndex == -1) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Add an appliance before simulating.");
+    return;
+}
+
+try {
+    double newHours = Double.parseDouble(
+            txtNewHoursPerDay.getText().trim());
+
+    Appliance appliance =
+            manager.getAllAppliances().get(selectedIndex);
+
+    double currentHours = appliance.getHoursPerDay();
+
+    if (!Double.isFinite(newHours)
+            || newHours < 0 || newHours > currentHours) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "New hours must be between 0 and " + currentHours + ".");
+        return;
+    }
+
+    double currentConsumption = appliance.calculateDailyConsumption();
+
+    double newConsumption = 0;
+
+    if (currentHours > 0) {
+        newConsumption = currentConsumption * (newHours / currentHours);
+    }
+
+    double savings = currentConsumption - newConsumption;
+
+    txtSimulationResult.setText(String.format(
+            java.util.Locale.US,
+            "Appliance: %s%n"
+            + "Current consumption: %.3f kWh/day%n"
+            + "New consumption: %.3f kWh/day%n"
+            + "Energy savings: %.3f kWh/day",
+            appliance.getName(),
+            currentConsumption,
+            newConsumption,
+            savings));
+
+} catch (NumberFormatException ex) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Enter valid hours. Use a decimal point, for example 2.5.");
+} // TODO add your handling code here:
+    }//GEN-LAST:event_btnSimulateActionPerformed
 
     /**
      * @param args the command line arguments
