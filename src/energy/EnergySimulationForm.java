@@ -25,7 +25,8 @@ public class EnergySimulationForm extends javax.swing.JFrame {
 public EnergySimulationForm(ApplianceManager manager) {
     this.manager = manager;
     initComponents();
-
+    setTitle("EcoTracker - Energy Savings Simulation");
+    
     cmbAppliance.removeAllItems();
 
     for (Appliance appliance : manager.getAllAppliances()) {
@@ -56,6 +57,7 @@ public EnergySimulationForm(ApplianceManager manager) {
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EcoTracker - Energy Savings Simulation");
 
         jLabel1.setText("Simulate Electricity Savings");
 
@@ -69,7 +71,7 @@ public EnergySimulationForm(ApplianceManager manager) {
         btnSimulate.setText("Simulate");
         btnSimulate.addActionListener(this::btnSimulateActionPerformed);
 
-        jLabel4.setText("Estimate comsumption and saving (kwh/day)");
+        jLabel4.setText("Estimated consumption and savings (kWh/day)");
 
         txtSimulationResult.setColumns(20);
         txtSimulationResult.setRows(5);
@@ -90,15 +92,18 @@ public EnergySimulationForm(ApplianceManager manager) {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(163, 163, 163)
                         .addComponent(btnSimulate)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbAppliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(backButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(backButton)
+                                .addGap(68, 68, 68))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbAppliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
