@@ -258,11 +258,34 @@ dispose();
     String date = textLb2.getText();
     double duration = Double.parseDouble(textLb3.getText());
     double volume = Double.parseDouble(textLb4.getText());
+    
+    WaterActivity activity;
 
-    // Creates a water activity.
-    WaterActivity activity =
-            new WaterActivity(id, date, duration, volume);
+    
+    // Checks if Hot water is selected.
+if ("Hot water".equals(comboLb5.getSelectedItem())) {
 
+    // Reads the temperatures and emission factor.
+    double initialTemperature =
+            Double.parseDouble(textLb6.getText());
+
+    double finalTemperature =
+            Double.parseDouble(textLb7.getText());
+
+    double emissionFactor =
+            Double.parseDouble(textLb8.getText());
+
+    // Creates a hot water record.
+    activity = new HotWaterActivity(
+            id, date, duration, volume,
+            initialTemperature, finalTemperature, emissionFactor);
+
+} else {
+
+    // Creates a cold water record.
+    activity = new WaterActivity(id, date, duration, volume);
+}
+    
     // Adds the object to the list.
     manager.addActivity(activity);
 
