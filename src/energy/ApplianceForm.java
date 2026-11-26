@@ -14,6 +14,7 @@ import energy.EnergySimulationForm;
  * @author paulo
  */
 public class ApplianceForm extends javax.swing.JFrame {
+    private static final ApplianceManager manager =new ApplianceManager();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ApplianceForm.class.getName());
 
@@ -54,13 +55,14 @@ public class ApplianceForm extends javax.swing.JFrame {
         homeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EcoTracker - Household Eletricity");
+        setTitle("EcoTracker - Household Electricity");
+        setFocusable(false);
 
-        jLabel1.setText("Household Eletricity");
+        jLabel1.setText("Household Electricity");
 
         jLabel2.setText("Appliance name");
 
-        jLabel3.setText("Power (w)");
+        jLabel3.setText("Power (W)");
 
         jLabel4.setText("Hours used per day");
 
@@ -73,15 +75,19 @@ public class ApplianceForm extends javax.swing.JFrame {
 
         txtHeatingProportion.addActionListener(this::txtHeatingProportionActionPerformed);
 
-        jLabel6.setText("Records and estimated consuption (kwh/day)");
+        jLabel6.setText("Records and estimated consumption (kWh/day)");
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(this::btnAddActionPerformed);
 
         btnDisplayAll.setText("Display all");
+        btnDisplayAll.addActionListener(this::btnDisplayAllActionPerformed);
 
         btnSearch.setText("Search");
+        btnSearch.addActionListener(this::btnSearchActionPerformed);
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
         txtRecords.setEditable(false);
         txtRecords.setColumns(20);
@@ -106,11 +112,11 @@ public class ApplianceForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -129,28 +135,27 @@ public class ApplianceForm extends javax.swing.JFrame {
                                         .addComponent(jLabel6)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(151, 151, 151)
-                                                .addComponent(btnAdd)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnDisplayAll)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnSearch)
-                                                .addGap(12, 12, 12)
-                                                .addComponent(btnDelete))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(132, 132, 132)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(151, 151, 151)
+                                        .addComponent(btnAdd)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDisplayAll)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnSearch)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(btnDelete)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(132, 132, 132)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(homeButton)
-                                .addGap(47, 47, 47)
-                                .addComponent(jLabel1))
-                            .addComponent(chkHeater, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(642, Short.MAX_VALUE))))
+                        .addComponent(homeButton)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(618, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(chkHeater, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,9 +177,9 @@ public class ApplianceForm extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtPowerWatts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(txtHoursPerDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,11 +190,10 @@ public class ApplianceForm extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(txtHeatingProportion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSimulateSavings)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         pack();
@@ -218,11 +222,119 @@ dispose();
 
     private void btnSimulateSavingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulateSavingsActionPerformed
         // TODO add your handling code here:
-        EnergySimulationForm screen = new EnergySimulationForm();
+        EnergySimulationForm screen = new EnergySimulationForm(manager);
 screen.setLocationRelativeTo(this);
 screen.setVisible(true);
 dispose();
     }//GEN-LAST:event_btnSimulateSavingsActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        try {
+    String name = txtApplianceName.getText().trim();
+    double power = Double.parseDouble(txtPowerWatts.getText().trim());
+    double hours = Double.parseDouble(txtHoursPerDay.getText().trim());
+
+    if (name.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Enter the appliance name.");
+        return;
+    }
+
+    if (!Double.isFinite(power) || power <= 0
+            || !Double.isFinite(hours) || hours < 0 || hours > 24) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Power must be greater than zero. Hours must be between 0 and 24.");
+        return;
+    }
+
+    Appliance appliance;
+
+    if (chkHeater.isSelected()) {
+        double proportion = Double.parseDouble(
+                txtHeatingProportion.getText().trim());
+
+        if (!Double.isFinite(proportion)
+                || proportion < 0 || proportion > 1) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Heating proportion must be between 0 and 1.");
+            return;
+        }
+
+        appliance = new HeatingAppliance(name, power, hours, proportion);
+    } else {
+        appliance = new Appliance(name, power, hours);
+    }
+
+    manager.addAppliance(appliance);
+
+    txtRecords.setText(
+            "Added: " + appliance.getName()
+            + "\nDaily consumption: "
+            + appliance.calculateDailyConsumption() + " kWh/day");
+
+} catch (NumberFormatException ex) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Enter valid numbers. Use a decimal point, for example 0.5.");
+}// TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDisplayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayAllActionPerformed
+if (manager.getAllAppliances().isEmpty()) {
+    txtRecords.setText("No records yet.");
+    return;
+}
+
+StringBuilder records = new StringBuilder();
+
+for (Appliance appliance : manager.getAllAppliances()) {
+    records.append("Name: ")
+            .append(appliance.getName())
+            .append("\nDaily consumption: ")
+            .append(appliance.calculateDailyConsumption())
+            .append(" kWh/day\n\n");
+}
+
+txtRecords.setText(records.toString());        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDisplayAllActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+       String name = txtApplianceName.getText().trim();
+
+if (name.isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Enter the appliance name to search.");
+    return;
+}
+
+Appliance appliance = manager.searchAppliance(name);
+
+if (appliance == null) {
+    txtRecords.setText("Appliance not found.");
+} else {
+    txtRecords.setText(
+            "Name: " + appliance.getName()
+            + "\nDaily consumption: "
+            + appliance.calculateDailyConsumption() + " kWh/day");
+} // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+     String name = txtApplianceName.getText().trim();
+
+if (name.isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Enter the appliance name to delete.");
+    return;
+}
+
+boolean deleted = manager.deleteAppliances(name);
+
+if (deleted) {
+    txtRecords.setText("Appliance deleted: " + name);
+} else {
+    txtRecords.setText("Appliance not found.");
+    }   // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

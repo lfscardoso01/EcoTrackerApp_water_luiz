@@ -11,14 +11,30 @@ package energy;
  */
 public class EnergySimulationForm extends javax.swing.JFrame {
     
+    private ApplianceManager manager;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EnergySimulationForm.class.getName());
 
     /**
      * Creates new form EnergySimulationForm
      */
     public EnergySimulationForm() {
-        initComponents();
+    this(new ApplianceManager());
+}
+
+public EnergySimulationForm(ApplianceManager manager) {
+    this.manager = manager;
+    initComponents();
+    setTitle("EcoTracker - Energy Savings Simulation");
+    
+    cmbAppliance.removeAllItems();
+
+    for (Appliance appliance : manager.getAllAppliances()) {
+        cmbAppliance.addItem(appliance.getName());
     }
+
+    txtSimulationResult.setEditable(false);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,6 +57,7 @@ public class EnergySimulationForm extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EcoTracker - Energy Savings Simulation");
 
         jLabel1.setText("Simulate Electricity Savings");
 
@@ -52,8 +69,9 @@ public class EnergySimulationForm extends javax.swing.JFrame {
         jLabel3.setText("New hours used per day");
 
         btnSimulate.setText("Simulate");
+        btnSimulate.addActionListener(this::btnSimulateActionPerformed);
 
-        jLabel4.setText("Estimate comsumption and saving (kwh/day)");
+        jLabel4.setText("Estimated consumption and savings (kWh/day)");
 
         txtSimulationResult.setColumns(20);
         txtSimulationResult.setRows(5);
@@ -74,15 +92,18 @@ public class EnergySimulationForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(163, 163, 163)
                         .addComponent(btnSimulate)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbAppliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(backButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(backButton)
+                                .addGap(68, 68, 68))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbAppliance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
@@ -131,6 +152,58 @@ screen.setLocationRelativeTo(this);
 screen.setVisible(true);
 dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void btnSimulateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulateActionPerformed
+       int selectedIndex = cmbAppliance.getSelectedIndex();
+
+if (selectedIndex == -1) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Add an appliance before simulating.");
+    return;
+}
+
+try {
+    double newHours = Double.parseDouble(
+            txtNewHoursPerDay.getText().trim());
+
+    Appliance appliance =
+            manager.getAllAppliances().get(selectedIndex);
+
+    double currentHours = appliance.getHoursPerDay();
+
+    if (!Double.isFinite(newHours)
+            || newHours < 0 || newHours > currentHours) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "New hours must be between 0 and " + currentHours + ".");
+        return;
+    }
+
+    double currentConsumption = appliance.calculateDailyConsumption();
+
+    double newConsumption = 0;
+
+    if (currentHours > 0) {
+        newConsumption = currentConsumption * (newHours / currentHours);
+    }
+
+    double savings = currentConsumption - newConsumption;
+
+    txtSimulationResult.setText(String.format(
+            java.util.Locale.US,
+            "Appliance: %s%n"
+            + "Current consumption: %.3f kWh/day%n"
+            + "New consumption: %.3f kWh/day%n"
+            + "Energy savings: %.3f kWh/day",
+            appliance.getName(),
+            currentConsumption,
+            newConsumption,
+            savings));
+
+} catch (NumberFormatException ex) {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Enter valid hours. Use a decimal point, for example 2.5.");
+} // TODO add your handling code here:
+    }//GEN-LAST:event_btnSimulateActionPerformed
 
     /**
      * @param args the command line arguments
