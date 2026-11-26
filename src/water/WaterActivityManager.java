@@ -4,6 +4,9 @@
  */
 package water;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 /**
  *
  * @author lfscardoso
@@ -54,4 +57,46 @@ public class WaterActivityManager {
 
             return false;
     }
+    
+    // Calculates water consumption and emissions for a date range.
+public String generateReport(String startDate, String endDate) {
+
+    DateTimeFormatter format = DateTimeFormatter
+            .ofPattern("dd-MM-uuuu")
+            .withResolverStyle(ResolverStyle.STRICT);
+
+    LocalDate start = LocalDate.parse(startDate.trim(), format);
+    LocalDate end = LocalDate.parse(endDate.trim(), format);
+
+    if (end.isBefore(start)) {
+        throw new IllegalArgumentException(
+                "End date cannot be before start date.");
+    }
+
+    double totalVolume = 0;
+    double totalEmissions = 0;
+    int count = 0;
+
+    for (WaterActivity activity : activities) {
+        LocalDate date = LocalDate.parse(activity.getDate(), format);
+
+        // Includes records on the start and end dates.
+        if (!date.isBefore(start) && !date.isAfter(end)) {
+            totalVolume += activity.getVolume();
+            count++;
+
+            // Only hot water records have heating emissions.
+            if (activity instanceof HotWaterActivity) {
+                HotWaterActivity hotWater = (HotWaterActivity) activity;
+                totalEmissions += hotWater.calculateCarbonEmissions();
+            }
+        }
+    }
+
+    return "Report period: " + startDate + " to " + endDate
+            + "\nNumber of records: " + count
+            + "\nTotal water consumption: " + totalVolume + " litres"
+            + "\nEstimated heating emissions: "
+            + totalEmissions + " kg CO2e";
+}
 }

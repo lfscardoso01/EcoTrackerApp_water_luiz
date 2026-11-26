@@ -102,10 +102,7 @@
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="ReportsButton" min="-2" max="-2" attributes="0"/>
-                                  <Component id="searchButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="ReportsButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -183,8 +180,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="ReportsButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="searchButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="26" max="32767" attributes="0"/>
@@ -206,6 +201,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb1">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a number"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textLb1ActionPerformed"/>
       </Events>
@@ -216,6 +214,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb2">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a date as DD-MM-YYYY"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textLb2ActionPerformed"/>
       </Events>
@@ -226,6 +227,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb3">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a number"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="volumeLb4">
       <Properties>
@@ -233,6 +237,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb4">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a number"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="typeLb5">
       <Properties>
@@ -261,6 +268,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb6">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a number, use a dot for decimals"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="finalLb7">
       <Properties>
@@ -268,6 +278,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb7">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a number, use a dot for decimals"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="emissionLb8">
       <Properties>
@@ -275,6 +288,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textLb8">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a number, use a dot for decimals"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="addButton">
       <Properties>
@@ -283,11 +299,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="searchButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Search"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="deleteButton">
       <Properties>
@@ -314,6 +325,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textDel">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Enter a ID"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textDelActionPerformed"/>
       </Events>

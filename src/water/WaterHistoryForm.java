@@ -48,9 +48,7 @@ public class WaterHistoryForm extends javax.swing.JFrame {
 
         endLb2.setText("End date ( DD-MM-YYYY )");
 
-        textLb1.setText("jTextField1");
-
-        textLb2.setText("jTextField2");
+        textLb2.setText(" ");
         textLb2.addActionListener(this::textLb2ActionPerformed);
 
         jTextArea1.setColumns(20);
@@ -58,8 +56,10 @@ public class WaterHistoryForm extends javax.swing.JFrame {
         resultArea.setViewportView(jTextArea1);
 
         recordsButton.setText("Display Records");
+        recordsButton.addActionListener(this::recordsButtonActionPerformed);
 
         generateButton.setText("Generate Report");
+        generateButton.addActionListener(this::generateButtonActionPerformed);
 
         backButton.setText("Back");
         backButton.addActionListener(this::backButtonActionPerformed);
@@ -76,23 +76,23 @@ public class WaterHistoryForm extends javax.swing.JFrame {
                             .addComponent(endLb2)
                             .addComponent(startLb1))
                         .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textLb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textLb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textLb1, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                            .addComponent(textLb2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(136, 136, 136)
+                        .addComponent(titleLb3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addComponent(recordsButton)
                         .addGap(32, 32, 32)
                         .addComponent(generateButton)
                         .addGap(39, 39, 39)
                         .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(titleLb3))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(94, 94, 94)
-                        .addComponent(resultArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                        .addComponent(resultArea, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,13 +107,13 @@ public class WaterHistoryForm extends javax.swing.JFrame {
                     .addComponent(endLb2)
                     .addComponent(textLb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(resultArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(resultArea, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recordsButton)
                     .addComponent(generateButton)
                     .addComponent(backButton))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -128,6 +128,45 @@ public class WaterHistoryForm extends javax.swing.JFrame {
         new WaterActivityForm().setVisible(true);
 dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void recordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordsButtonActionPerformed
+        // TODO add your handling code here:
+        // Displays the records stored in the shared manager.
+    jTextArea1.setText(
+        WaterActivityForm.getManager().displayActivities()
+);
+    }//GEN-LAST:event_recordsButtonActionPerformed
+
+    private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
+        // TODO add your handling code here:
+       try {
+        // Reads the report dates.
+        String startDate = textLb1.getText().trim();
+        String endDate = textLb2.getText().trim();
+
+        if (startDate.isEmpty() || endDate.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this, "Enter the start and end dates.");
+            return;
+        }
+
+        // Generates and displays the report.
+        String report = WaterActivityForm.getManager()
+                .generateReport(startDate, endDate);
+
+        jTextArea1.setText(report);
+
+    } catch (java.time.format.DateTimeParseException ex) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this, "Check the report dates and recorded activity dates. "
+                        + "Use valid dates in DD-MM-YYYY format.");
+
+    } catch (IllegalArgumentException ex) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this, ex.getMessage());
+    }
+    }//GEN-LAST:event_generateButtonActionPerformed
+
 
     /**
      * @param args the command line arguments

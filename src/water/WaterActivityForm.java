@@ -25,6 +25,7 @@ private static WaterActivityManager manager =
      */
     public WaterActivityForm() {
         initComponents();
+        updateHotWaterFields();
     }
 
     /**
@@ -54,7 +55,6 @@ private static WaterActivityManager manager =
         emissionLb8 = new javax.swing.JLabel();
         textLb8 = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
-        searchButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         ReportsButton = new javax.swing.JButton();
         homeButton = new javax.swing.JButton();
@@ -66,15 +66,21 @@ private static WaterActivityManager manager =
 
         recordLb1.setText("Record ID");
 
+        textLb1.setToolTipText("Enter a number");
         textLb1.addActionListener(this::textLb1ActionPerformed);
 
         dateLb2.setText("Date (DD-MM-YYYY)");
 
+        textLb2.setToolTipText("Enter a date as DD-MM-YYYY");
         textLb2.addActionListener(this::textLb2ActionPerformed);
 
         durationLb3.setText("Duration(min)");
 
+        textLb3.setToolTipText("Enter a number");
+
         volumeLb4.setText("Water volume ( litres )");
+
+        textLb4.setToolTipText("Enter a number");
 
         typeLb5.setText("Water type");
 
@@ -83,14 +89,18 @@ private static WaterActivityManager manager =
 
         inicialLb6.setText("Initial Temp( °C )");
 
+        textLb6.setToolTipText("Enter a number, use a dot for decimals");
+
         finalLb7.setText("Final Temp ( °C )");
+
+        textLb7.setToolTipText("Enter a number, use a dot for decimals");
 
         emissionLb8.setText("Emission factor (kg CO2e/kWh)");
 
+        textLb8.setToolTipText("Enter a number, use a dot for decimals");
+
         addButton.setText("Add");
         addButton.addActionListener(this::addButtonActionPerformed);
-
-        searchButton.setText("Search");
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(this::deleteButtonActionPerformed);
@@ -101,6 +111,7 @@ private static WaterActivityManager manager =
         homeButton.setText("Home");
         homeButton.addActionListener(this::homeButtonActionPerformed);
 
+        textDel.setToolTipText("Enter a ID");
         textDel.addActionListener(this::textDelActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,9 +177,7 @@ private static WaterActivityManager manager =
                                     .addComponent(textLb8)
                                     .addComponent(textLb7)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ReportsButton)
-                                    .addComponent(searchButton))
+                                .addComponent(ReportsButton)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
@@ -226,9 +235,7 @@ private static WaterActivityManager manager =
                                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(31, 31, 31)
-                                .addComponent(ReportsButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(searchButton)))
+                                .addComponent(ReportsButton)))
                         .addContainerGap(26, Short.MAX_VALUE))))
         );
 
@@ -237,6 +244,9 @@ private static WaterActivityManager manager =
 
     private void comboLb5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboLb5ActionPerformed
         // TODO add your handling code here:
+        
+        updateHotWaterFields();
+        
     }//GEN-LAST:event_comboLb5ActionPerformed
 
     private void textLb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLb1ActionPerformed
@@ -246,13 +256,13 @@ private static WaterActivityManager manager =
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         // TODO add your handling code here:
         new EcoTracker().setVisible(true);
-dispose();
+        dispose();
     }//GEN-LAST:event_homeButtonActionPerformed
 
     private void ReportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportsButtonActionPerformed
         // TODO add your handling code here:
         new WaterHistoryForm().setVisible(true);
-dispose();
+        dispose();
     }//GEN-LAST:event_ReportsButtonActionPerformed
 
     private void textLb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLb2ActionPerformed
@@ -271,33 +281,33 @@ dispose();
 
     
     // Checks if Hot water is selected.
-if ("Hot water".equals(comboLb5.getSelectedItem())) {
+    if ("Hot water".equals(comboLb5.getSelectedItem())) {
 
-    // Reads the temperatures and emission factor.
-    double initialTemperature =
-            Double.parseDouble(textLb6.getText());
+        // Reads the temperatures and emission factor.
+        double initialTemperature =
+                Double.parseDouble(textLb6.getText());
 
-    double finalTemperature =
-            Double.parseDouble(textLb7.getText());
+        double finalTemperature =
+                Double.parseDouble(textLb7.getText());
 
-    double emissionFactor =
-            Double.parseDouble(textLb8.getText());
+        double emissionFactor =
+                Double.parseDouble(textLb8.getText());
 
-    // Creates a hot water record.
-    activity = new HotWaterActivity(
-            id, date, duration, volume,
-            initialTemperature, finalTemperature, emissionFactor);
+        // Creates a hot water record.
+        activity = new HotWaterActivity(
+                id, date, duration, volume,
+                initialTemperature, finalTemperature, emissionFactor);
 
-} else {
+    } else {
 
-    // Creates a cold water record.
-    activity = new WaterActivity(id, date, duration, volume);
-}
-    
-    // Adds the object to the list.
-    manager.addActivity(activity);
+        // Creates a cold water record.
+        activity = new WaterActivity(id, date, duration, volume);
+    }
 
-   JOptionPane.showMessageDialog(this, "Record added successfully.");
+        // Adds the object to the list.
+        manager.addActivity(activity);
+
+       JOptionPane.showMessageDialog(this, "Record added successfully.");
 
 
     }//GEN-LAST:event_addButtonActionPerformed
@@ -329,6 +339,19 @@ if ("Hot water".equals(comboLb5.getSelectedItem())) {
 }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void updateHotWaterFields() {
+    boolean hotWater =
+            "Hot water".equals(comboLb5.getSelectedItem());
+
+    textLb6.setEnabled(hotWater);
+    textLb7.setEnabled(hotWater);
+    textLb8.setEnabled(hotWater);
+}
+        // Gives the history screen access to the same manager.
+    public static WaterActivityManager getManager() {
+        return manager;
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -366,7 +389,6 @@ if ("Hot water".equals(comboLb5.getSelectedItem())) {
     private javax.swing.JButton homeButton;
     private javax.swing.JLabel inicialLb6;
     private javax.swing.JLabel recordLb1;
-    private javax.swing.JButton searchButton;
     private javax.swing.JTextField textDel;
     private javax.swing.JTextField textLb1;
     private javax.swing.JTextField textLb2;
