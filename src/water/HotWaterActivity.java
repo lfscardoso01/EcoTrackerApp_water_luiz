@@ -64,8 +64,8 @@ public class HotWaterActivity extends WaterActivity implements CarbonCalculate {
             return super.displayInfo() +       
                 "\nInitial Temperature: "+initialTemperature+ " C " +
                 "\nFinal Temperature: " +finalTemperature+ " C " +
-                "\nEnergy: " +calculateHeatingEnergy()+ " kWh" +
-                "\nCarbon Emission: " +calculateCarbonEmissions()+ " kg CO2e ";
+                "\nEnergy: " +String.format("%.2f", calculateHeatingEnergy())+ " kWh" +
+                "\nCarbon Emission: " +String.format("%.2f", calculateCarbonEmissions())+ " kg CO2e ";
     }
     
 
