@@ -3,15 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package water;
+import java.io.Serializable;
 
 /**
  * Represents a water consumption record.
  * student Luiz Cardoso
  * @author lfscardoso
  */
-public class WaterActivity {
+public class WaterActivity implements Serializable {
     
-     private int id;
+    private static final long serialVersionUID = 1L;
+    private int id;
     private String date;
     private double duration;
     private double volume;

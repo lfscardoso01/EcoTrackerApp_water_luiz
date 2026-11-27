@@ -8,7 +8,7 @@ package water;
  * Represents a hot water consumption record.
  * @author lfscardoso
  */
-public class HotWaterActivity extends WaterActivity {
+public class HotWaterActivity extends WaterActivity implements CarbonCalculate {
     
     private double initialTemperature;
     private double finalTemperature;

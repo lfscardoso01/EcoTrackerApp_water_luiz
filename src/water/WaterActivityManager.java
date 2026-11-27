@@ -7,6 +7,14 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
+
+
 /**
  *
  * @author lfscardoso
@@ -57,6 +65,25 @@ public class WaterActivityManager {
 
             return false;
     }
+    
+    // Saves all water records to a file.
+    public void saveToFile() throws IOException {
+        try (ObjectOutputStream output =
+                new ObjectOutputStream(
+                        new FileOutputStream("waterActivities.dat"))) {
+
+            output.writeObject(activities);
+        }
+}
+    // Loads the saved water records.
+public void loadFromFile() throws IOException, ClassNotFoundException {
+    try (ObjectInputStream input =
+            new ObjectInputStream(
+                    new FileInputStream("waterActivities.dat"))) {
+
+        activities = (ArrayList<WaterActivity>) input.readObject();
+    }
+}
     
     // Calculates water consumption and emissions for a date range.
 public String generateReport(String startDate, String endDate) {

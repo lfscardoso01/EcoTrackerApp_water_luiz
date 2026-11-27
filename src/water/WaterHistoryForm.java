@@ -41,6 +41,8 @@ public class WaterHistoryForm extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
         searchText = new javax.swing.JTextField();
+        saveButton = new javax.swing.JButton();
+        loadButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,21 +74,29 @@ public class WaterHistoryForm extends javax.swing.JFrame {
         searchText.setText(" ");
         searchText.setToolTipText("Search by ID");
 
+        saveButton.setText("Save");
+        saveButton.addActionListener(this::saveButtonActionPerformed);
+
+        loadButton.setText("Load");
+        loadButton.addActionListener(this::loadButtonActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(titleLb3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(resultArea, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(136, 136, 136)
+                .addComponent(titleLb3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(resultArea, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loadButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(saveButton, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -129,9 +139,17 @@ public class WaterHistoryForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(endLb2)
                     .addComponent(textLb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(resultArea, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(resultArea, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveButton)
+                        .addGap(31, 31, 31)
+                        .addComponent(loadButton)
+                        .addGap(75, 75, 75)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(recordsButton)
@@ -213,6 +231,41 @@ dispose();
     }
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+    WaterActivityForm.getManager().saveToFile();
+
+    javax.swing.JOptionPane.showMessageDialog(
+            this, "Records saved successfully.");
+
+} catch (java.io.IOException ex) {
+    javax.swing.JOptionPane.showMessageDialog(
+            this, "Could not save the file: " + ex.getMessage());
+}
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+    WaterActivityForm.getManager().loadFromFile();
+
+    jTextArea1.setText(
+            WaterActivityForm.getManager().displayActivities());
+
+    javax.swing.JOptionPane.showMessageDialog(
+            this, "Records loaded successfully.");
+
+} catch (java.io.FileNotFoundException ex) {
+    javax.swing.JOptionPane.showMessageDialog(
+            this, "No saved file found. Save some records first.");
+
+} catch (java.io.IOException | ClassNotFoundException ex) {
+    javax.swing.JOptionPane.showMessageDialog(
+            this, "Could not load the file: " + ex.getMessage());
+}
+    }//GEN-LAST:event_loadButtonActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -244,8 +297,10 @@ dispose();
     private javax.swing.JLabel endLb2;
     private javax.swing.JButton generateButton;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton loadButton;
     private javax.swing.JButton recordsButton;
     private javax.swing.JScrollPane resultArea;
+    private javax.swing.JButton saveButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchText;
     private javax.swing.JLabel startLb1;

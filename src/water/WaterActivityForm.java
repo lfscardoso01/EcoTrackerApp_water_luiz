@@ -273,6 +273,14 @@ private static WaterActivityManager manager =
         // TODO add your handling code here:
     // Reads the values entered in the form.
     int id = Integer.parseInt(textLb1.getText());
+    
+    // Prevents duplicate record IDs.
+    if (manager.searchActivity(id) != null) {
+        JOptionPane.showMessageDialog(
+                this, "This ID already exists. Enter another ID.");
+        return;
+    }
+    
     String date = textLb2.getText();
     double duration = Double.parseDouble(textLb3.getText());
     double volume = Double.parseDouble(textLb4.getText());
